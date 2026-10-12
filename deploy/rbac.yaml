@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: backuppolicy-operator
+  namespace: default
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: backuppolicy-operator
+rules:
+  - apiGroups: [ops.example.com]
+    resources: [backuppolicies]
+    verbs: [get, list, watch]
+  - apiGroups: [ops.example.com]
+    resources: [backuppolicies/status]
+    verbs: [get, patch, update]
+  - apiGroups: ["ops.example.com"]
+    resources: ["backuppolicies"]
+    verbs: ["get", "list", "watch", "patch", "update"]
+  - apiGroups: ["ops.example.com"]
+    resources: ["backuppolicies/status"]
+    verbs: ["get", "patch", "update"]
+  - apiGroups: [batch]
+    resources: [cronjobs]
+    verbs: [get, list, watch, create, patch, update]
+  - apiGroups: [""]
+    resources: [persistentvolumeclaims]
+    verbs: [get]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: backuppolicy-operator
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: backuppolicy-operator
+subjects:
+  - kind: ServiceAccount
+    name: backuppolicy-operator
+    namespace: default

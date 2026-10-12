@@ -1,0 +1,10 @@
+apiVersion: ops.example.com/v1alpha1
+kind: BackupPolicy
+metadata:
+  name: invalid-backup
+spec:
+  schedule: "not-a-cron"
+  target:
+    kind: PersistentVolumeClaim
+    name: app-data
+  retention: 24

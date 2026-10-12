@@ -1,0 +1,22 @@
+@'
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+*.log
+.pytest_cache/
+.coverage
+htmlcov/
+.vscode/
+.idea/
+*-patch.json
+schedule-patch.json
+invalid-patch.json
+suspend-patch.json
+resume-patch.json
+missing-pvc-patch.json
+restore-pvc-patch.json
+'@ | Set-Content -Encoding ascii .gitignore

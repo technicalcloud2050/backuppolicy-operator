@@ -1,0 +1,11 @@
+apiVersion: ops.example.com/v1alpha1
+kind: BackupPolicy
+metadata:
+  name: app-data-backup
+spec:
+  schedule: "*/1 * * * *"
+  target:
+    kind: PersistentVolumeClaim
+    name: app-data
+  retention: 24
+  suspend: false

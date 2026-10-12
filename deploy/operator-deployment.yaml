@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backuppolicy-operator
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backuppolicy-operator
+  template:
+    metadata:
+      labels:
+        app: backuppolicy-operator
+    spec:
+      serviceAccountName: backuppolicy-operator
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+      containers:
+        - name: operator
+          image: backuppolicy-operator:dev
+          env:
+          - name: USER
+            value: operator
+          imagePullPolicy: IfNotPresent
+          resources:
+            requests: {cpu: 50m, memory: 64Mi}
+            limits: {cpu: 250m, memory: 256Mi}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities: {drop: [ALL]}
